@@ -124,11 +124,11 @@ jobs:
                 - Run the entire test suite to ensure your changes have not caused any regressions.
 
             6.  **Commit and Push:**
-                - Commit your changes with a conventional commit message: `git commit -am "fix: [short summary of fix] | Closes #${ISSUE_NUMBER}"`
-                - Push the branch to the repository: `git push --set-upstream origin iflow/issue-${ISSUE_NUMBER}`
+                - Commit your changes
+                - Push the branch to the repository
 
             7.  **Create Pull Request:**
-                - Create a pull request using `gh pr create`.
+                - Create a pull request
                 - **Title:** `fix: [short summary of fix]`
                 - **Body:** The PR body MUST be descriptive. It should contain:
                   - A link to the original issue (e.g., `Closes #${ISSUE_NUMBER}`).
