@@ -1,4 +1,4 @@
-# Repository Orchestration Planning
+# Repository Orchestration Plan
 
 ## Current State Analysis
 
