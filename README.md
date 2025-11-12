@@ -4,6 +4,12 @@ This repository contains GitHub Actions workflows for iFlow AI automation.
 
 ## Workflows
 
+### iflow-issue.yml
+Handles issue automation including:
+- Automatically solving issues when opened
+- Creating pull requests with solutions
+- Using iFlow CLI for code analysis and implementation
+
 ### iflow-pr.yml
 Handles pull request automation including:
 - Applying feedback from PR discussions
@@ -23,6 +29,18 @@ Orchestrator workflow for repository maintenance and innovation:
 - Manages workflows, dependencies, documentation, labels, and innovation tasks
 - Has various scopes: workflows, deps, docs, labels, or innovate
 
+### iflow-maintenance.yml
+Repository maintenance workflow:
+- Runs on a schedule (every weekday at 2:00 AM UTC)
+- Performs dependency updates and security audits
+- Applies only non-breaking patch-level updates
+
+### iflow-intelijen.yml
+Repository intelligence gathering workflow:
+- Runs on a schedule (every Monday at 3:00 AM UTC)
+- Gathers data about issues, PRs, and workflow runs
+- Creates new issues based on analysis
+
 ### gemini-researcher.yml
 Automated research workflow for finding free VPS offers:
 - Runs on a schedule (weekly on Mondays at 03:00 UTC)
@@ -31,10 +49,15 @@ Automated research workflow for finding free VPS offers:
 - Automatically updates the `free-vps.md` file with current offers
 - Includes reliability scoring for each provider
 
+## Documentation
+
+For detailed information about each workflow, see [CI/CD Workflows Documentation](docs/cicd-workflows.md).
+
 ## Usage
 
 These workflows run automatically on relevant events. For manual triggering:
 
+- `iflow-issue.yml` can be triggered by opening an issue or commenting with `/solve`
 - `iflow-pr.yml` can be triggered with a PR number
 - `iflow-docs.yml` runs on pushes to main branch
 - `iflow-orchin.yml` can be triggered manually with various options (debug, dry_run, scope)
