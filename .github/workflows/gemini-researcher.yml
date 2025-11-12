@@ -1,111 +1,42 @@
-name: "Free VPS Research + Self‑Improve"
+name: "Free VPS Research – Simple"
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
   schedule:
     - cron: '0 3 * * 1'
 
 permissions:
   contents: write
-  issues: write
-  pull-requests: write
 
 jobs:
   research:
     runs-on: ubuntu-latest
     env:
       OUTPUT_FILE: free-vps.md
-      SELF_IMPROVE_FILE: self_improve.md
-      BRANCH_PREFIX: automated/free-vps-update
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Prepare prompt file
-        run: |
-          mkdir -p .github/gemini/prompts
-          cat > .github/gemini/prompts/search_free_vps.prompt <<'PROMPT'
-You are a web researcher. Task: search for credible offers of free VPS (free tier, trial, developer credits, community VPS).
-Output as Markdown with:
-- Date: YYYY‑MM‑DD
-- Summary header
-- List each offer: Name, URL, free offer details, limits, evidence (links/quotes), reliability score (1‑5), verification notes
-- Research‑log: search queries used, visited URLs
-If none found, explain why and suggest next steps.
-PROMPT
-
-      - name: Run Gemini CLI – Research free VPS
+      - name: Run Gemini CLI
         id: run_research
         uses: google-github-actions/run-gemini-cli@v0.1.14
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
           prompt: |
-            $(cat .github/gemini/prompts/search_free_vps.prompt)
+            Search for public, free‑VPS offers (free tier, trials, developer credits). 
+            Output in Markdown with date (YYYY‑MM‑DD), list of offers (name, URL, what is free, limits, reliability score 1‑5).
           upload_artifacts: false
 
-      - name: Write research output to file
+      - name: Write output to file
         run: |
           echo "${{ steps.run_research.outputs.summary }}" > ${{ env.OUTPUT_FILE }}
 
-      - name: Run Gemini CLI – Self‑Improve analysis
-        id: run_self_improve
-        uses: google-github-actions/run-gemini-cli@v0.1.14
-        with:
-          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
-          prompt: |
-            You are an analyst. Read the following markdown report and produce:
-            1) Concrete improvements to the research method (queries, sources, verification)
-            2) Suggested prompt variants for next run (2‑3, ≤50 words each)
-            3) Proposed automated test (shell/regex) to detect low‑quality output.
-            Report content:
-            $(cat ${{ env.OUTPUT_FILE }})
-          upload_artifacts: false
-
-      - name: Write self‑improve output to file
+      - name: Commit and push if changed
         run: |
-          echo "${{ steps.run_self_improve.outputs.summary }}" > ${{ env.SELF_IMPROVE_FILE }}
-
-      - name: Preview output files
-        run: |
-          echo "=== ${{ env.OUTPUT_FILE }} ==="
-          head -n 50 ${{ env.OUTPUT_FILE }} || true
-          echo "=== ${{ env.SELF_IMPROVE_FILE }} ==="
-          head -n 50 ${{ env.SELF_IMPROVE_FILE }} || true
-
-      - name: Configure Git user
-        run: |
-          git config user.name "github‑actions[bot]"
-          git config user.email "github‑actions[bot]@users.noreply.github.com"
-
-      - name: Commit & push changes
-        id: commit_push
-        run: |
-          BRANCH="${{ env.BRANCH_PREFIX }}-$(date +%Y%m%d%H%M%S)"
-          git checkout -b "$BRANCH"
-          git add ${{ env.OUTPUT_FILE }} ${{ env.SELF_IMPROVE_FILE }}
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-            echo "::set-output name=changed::false"
-            exit 0
-          else
-            git commit -m "chore: update free‑VPS research + self‑improve (automated)"
-            git push --set-upstream origin "$BRANCH"
-            echo "::set-output name=changed::true"
-            echo "::set-output name=branch::$BRANCH"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add ${{ env.OUTPUT_FILE }}
+          if ! git diff --cached --quiet; then
+            git commit -m "Update free‑VPS list"
+            git push
           fi
-
-      - name: Create Pull Request
-        if: steps.commit_push.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ steps.commit_push.outputs.branch }}
-          title: "[Automated] Update free‑VPS research + self‑improve"
-          body: |
-            This PR contains:
-            - Updated `${{ env.OUTPUT_FILE }}`
-            - Updated `${{ env.SELF_IMPROVE_FILE }}`
-            Please review and merge if acceptable.
-          labels: automated, bot
