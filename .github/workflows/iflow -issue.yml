@@ -27,6 +27,12 @@ jobs:
       contents: write
       issues: write
       pull-requests: write
+      actions: write
+      id-token: write
+      repository-projects: write
+      checks: write
+      discussions: write
+      
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
