@@ -10,10 +10,12 @@
 6. Most GitHub Actions are already using recent versions.
 7. No workflows are currently using pull_request_target, which is good for security.
 8. No lockfiles or dependency management files exist in the repository.
+9. Some workflow improvements require elevated permissions (workflows: write).
 
 ## Pending Tasks
 
-None
+1. GitHub Actions SHA pinning (blocked by permissions)
+2. Workflow caching improvements (blocked by permissions)
 
 ## Completed Tasks
 
@@ -26,4 +28,3 @@ None
 7. Verified no patch-level dependency updates are needed
 8. Added labeler configuration for automatic label assignment
 9. Created GitHub Actions SHA pinning reference documentation
-10. Added caching to key workflows (gemini-researcher, iflow-docs, iflow-maintenance)
