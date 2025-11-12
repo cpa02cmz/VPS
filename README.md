@@ -23,6 +23,14 @@ Orchestrator workflow for repository maintenance and innovation:
 - Manages workflows, dependencies, documentation, labels, and innovation tasks
 - Has various scopes: workflows, deps, docs, labels, or innovate
 
+### gemini-researcher.yml
+Automated research workflow for finding free VPS offers:
+- Runs on a schedule (weekly on Mondays at 03:00 UTC)
+- Can be triggered manually via workflow dispatch
+- Uses Google Gemini API to research and compile a list of free VPS providers
+- Automatically updates the `free-vps.md` file with current offers
+- Includes reliability scoring for each provider
+
 ## Usage
 
 These workflows run automatically on relevant events. For manual triggering:
