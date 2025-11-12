@@ -113,14 +113,14 @@ jobs:
 
           # Siapkan body dengan ekspansi shell, bukan ekspresi GHA
           BODY=$(cat <<'EOF'
-This PR keeps documentation in sync with recent changes.
-
-- Trigger commit: ${COMMIT_URL}
-- Compared range: ${PREV_SHA:-N/A} .. ${MAIN_SHA}
-
-Files under README.md, docs/**, examples/** may be updated.
-EOF
-)
+          This PR keeps documentation in sync with recent changes.
+          
+          - Trigger commit: ${COMMIT_URL}
+          - Compared range: ${PREV_SHA:-N/A} .. ${MAIN_SHA}
+          
+          Files under README.md, docs/**, examples/** may be updated.
+          EOF
+          )
           BODY="$(eval "echo \"$BODY\"")"
 
           if [[ -z "${PR_NUMBER}" || "${PR_NUMBER}" == "null" ]]; then
