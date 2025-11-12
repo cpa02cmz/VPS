@@ -1,39 +1,42 @@
-## CI/CD Audit Findings
+# CI/CD Optimization Planning Issue
+
+## Current State Analysis
 
 After auditing the existing workflows, I've identified several areas for improvement:
 
-### Current Workflows
-1. **Free VPS Research – Simple** (gemini-researcher.yml)
+### Existing Workflows
+1. **Free VPS Research** (`gemini-researcher.yml`)
    - Simple weekly research workflow
    - Uses Google Gemini CLI action
    - Commits results directly to main branch
 
-2. **iFlow - Apply PR Changes** (iflow-pr.yml)
+2. **iFlow - Apply PR Changes** (`iflow-pr.yml`)
    - Handles PR review comments
    - Uses iFlow CLI action for applying changes
    - Complex concurrency and permissions setup
 
-3. **iFlow - Orchestrator+ (Innovate)** (iflow-orchin.yml)
+3. **iFlow - Orchestrator+ (Innovate)** (`iflow-orchin.yml`)
    - Main orchestrator workflow
    - Runs on schedule and dispatch
    - Uses iFlow CLI for repository management
    - Comprehensive permissions and capabilities
 
-4. **iFlow - Update Documentation** (iflow-docs.yml)
+4. **iFlow - Update Documentation** (`iflow-docs.yml`)
    - Updates documentation on push to main
    - Creates/updates doc branch and PR
    - Uses iFlow CLI for documentation updates
 
-5. **iFlow - Repository Maintenance** (iflow-maintenance.yml)
+5. **iFlow - Repository Maintenance** (`iflow-maintenance.yml`)
    - Scheduled dependency security updates
    - Uses iFlow CLI for audit and patching
 
-6. **Iflow - Intelijen** (iflow-intelijen.yml)
+6. **Iflow - Intelijen** (`iflow-intelijen.yml`)
    - Repository intelligence gathering
    - Collects GHA runs, issues, PR data
    - Uses iFlow CLI for analysis and issue creation
 
-### Optimization Opportunities
+## Optimization Opportunities
+
 1. **Caching Improvements**
    - Add dependency caching to speed up workflows
    - Use lockfile-based cache keys
@@ -55,30 +58,22 @@ After auditing the existing workflows, I've identified several areas for improve
    - Create release-drafter configuration
    - Establish labeler rules
 
-## Proposed Changes
+## Proposed Implementation Plan
 
-1. **Immediate Actions**
-   - Add caching to existing workflows
-   - Create composite actions for common setup steps
-   - Extract reusable workflows
+### Phase 1: Immediate Actions (Caching & Composite Actions)
+- Add dependency caching to existing workflows
+- Create composite actions for common setup steps
+- Extract reusable workflows
 
-2. **Medium-term Improvements**
-   - Parallelize long jobs using matrix strategies
-   - Create experimental workflows for new approaches
-   - Add code scanning scaffolding
+### Phase 2: Medium-term Improvements (Parallelization & Experimentation)
+- Parallelize long jobs using matrix strategies
+- Create experimental workflows for new approaches
+- Add code scanning scaffolding
 
-3. **Long-term Enhancements**
-   - Implement release automation
-   - Add branch protection rulesets
-   - Curate policies and playbooks
-
-## Implementation Plan
-
-1. Create a planning issue (this issue) to track progress
-2. Implement CI improvements (caching, composite actions)
-3. Create experimental workflows for new strategies
-4. Add documentation and policy files
-5. Validate changes with trial runs and benchmarking
+### Phase 3: Long-term Enhancements (Automation & Governance)
+- Implement release automation
+- Add branch protection rulesets
+- Curate policies and playbooks
 
 ## Required Permissions
 
@@ -87,3 +82,10 @@ After auditing the existing workflows, I've identified several areas for improve
 - `issues: write` for issue management
 - `pull-requests: write` for PR operations
 - `security-events: write` for code scanning
+
+## Success Metrics
+
+- Reduction in average workflow execution time
+- Improved workflow reliability and reduced failures
+- Better maintainability through reusable components
+- Enhanced security through automated scanning
