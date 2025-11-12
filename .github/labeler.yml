@@ -1,0 +1,27 @@
+# Labeler configuration for automatic label assignment
+# https://github.com/actions/labeler
+
+# Apply labels based on file paths
+automation:
+  - .github/workflows/*
+  - .github/iflow/*
+  - .github/dependabot.yml
+
+documentation:
+  - README.md
+  - docs/*
+  - .github/ISSUE_TEMPLATE/documentation.md
+  - .github/PULL_REQUEST_TEMPLATE.md
+  - .github/SECURITY.md
+  - .github/CODEOWNERS
+
+enhancement:
+  - .github/ISSUE_TEMPLATE/feature_request.md
+
+bug:
+  - .github/ISSUE_TEMPLATE/bug_report.md
+
+# Apply multiple labels
+"automation,documentation":
+  - .github/iflow/memory.md
+  - .github/iflow/config.yaml
