@@ -1,62 +1,60 @@
-# Repository Orchestration Plan
+# Repository Orchestration Plan - 2025-11-13
 
-## Current State Analysis
+## Audit Summary
 
-### Workflows
-We have several workflows in the repository:
-1. Free VPS Research – Simple (gemini-researcher.yml)
-2. iFlow - Solve Issue (iflow -issue.yml)
-3. Iflow - Intelijen (iflow-intelijen.yml)
-4. iFlow - Repository Maintenance (iflow-maintenance.yml)
-5. iFlow - Repository Orchestrator (iflow-orchestrator.yml)
-6. iFlow - Orchestrator+ (Innovate) (iflow-orchin.yml)
-7. iFlow - Apply PR Changes (iflow-pr.yml)
+### Current Workflows
+1. **iflow-orchin.yml** - Main orchestrator with innovation capabilities
+2. **iflow-orchestrator.yml** - Legacy orchestrator
+3. **iflow-pr.yml** - PR feedback automation
+4. **iflow-docs.yml** - Documentation synchronization
+5. **gemini-researcher.yml** - Free VPS research
+6. **iflow-intelijen.yml** - Issue solving
+7. **iflow-maintenance.yml** - Repository maintenance
+8. **iflow-issue.yml** - Issue handling
 
-### CI Baseline
-From the recent run data, we can see that the "iFlow - Orchestrator+ (Innovate)" workflow has had both successes and failures. The most recent run is still in progress (empty conclusion).
+### Key Observations
+- Multiple orchestrator workflows exist (orchin and orchestrator) with overlapping functionality
+- Workflows have varying permission models
+- Some workflows use `workflow_dispatch` while others use `repository_dispatch`
+- Caching strategies not clearly defined
+- No centralized reusable workflow patterns
 
-## Proposed Improvements
+## Optimization Opportunities
 
-### 1. CI Optimization
-- Split/parallelize long jobs in iflow-orchin.yml
-- Extract reusable workflows to .github/workflows/_reusable/
-- Add matrix strategies where applicable
-- Implement caching keyed by lockfiles
+### CI Improvements
+1. **Consolidate orchestrator workflows** - Merge functionality from iflow-orchestrator.yml into iflow-orchin.yml
+2. **Standardize permissions model** - Ensure all workflows use least-privilege principles
+3. **Add caching strategies** - Implement build caches keyed by lockfiles
+4. **Extract reusable components** - Create composite actions for common steps
+5. **Add concurrency controls** - Prevent redundant workflow runs
 
-### 2. Experimental Workflows
-- Create exp-* workflows to trial new strategies
-- Wire them via workflow_call for reusability
+### Workflow Refactoring
+1. **Standardize triggers** - Use consistent event triggers across workflows
+2. **Add error handling** - Improve failure notifications and recovery
+3. **Optimize job splitting** - Break down long-running jobs into parallelizable steps
+4. **Add matrix strategies** - Use matrix for testing different configurations
 
-### 3. Documentation
-- Add CODEOWNERS file
-- Create issue templates for different types of issues
-- Add SECURITY.md
-- Implement labeler configuration
-- Set up release-drafter configuration
+## Execution Plan
 
-### 4. Dependency Management
-- Implement safe patch bumps with tests
+### Phase 1: Immediate Improvements
+- [ ] Create reusable workflow for common setup steps
+- [ ] Add caching to build jobs
+- [ ] Standardize git configuration across workflows
+- [ ] Improve error reporting in workflows
 
-### 5. Innovation
-- Create composite actions for common steps
-- Implement auto-benchmarking for CI time
+### Phase 2: Workflow Consolidation
+- [ ] Merge iflow-orchestrator.yml functionality into iflow-orchin.yml
+- [ ] Create reusable workflows for documentation and PR handling
+- [ ] Standardize permission models across all workflows
 
-## Implementation Plan
+### Phase 3: Advanced Optimization
+- [ ] Implement matrix strategies for parallelization
+- [ ] Create composite actions for common tasks
+- [ ] Add benchmarking for CI performance tracking
+- [ ] Implement release automation
 
-1. Create experimental workflows for testing new CI strategies
-2. Refactor existing workflows to use reusable components
-3. Add caching to speed up builds
-4. Implement documentation improvements
-5. Set up automated dependency updates
-6. Create composite actions for common tasks
-7. Validate changes with trial runs
-8. Measure and report CI time improvements
-9. Update policies and memory with learnings
-
-## Required Permissions
-- actions: write
-- contents: write
-- issues: write
-- pull-requests: write
-- security-events: write
-- workflows: write
+## Success Metrics
+- Reduce average CI run time by 20%
+- Consolidate workflows to reduce maintenance overhead
+- Improve error handling and reporting
+- Establish reusable patterns for future workflow development
