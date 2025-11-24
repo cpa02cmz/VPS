@@ -1,2 +1,1 @@
-I have created the  file with the requested information.
-Done.
+The list of free VPS offers has been compiled and saved to .
